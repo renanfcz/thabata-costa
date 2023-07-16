@@ -1,0 +1,44 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Client {
+  id         String   @id @default(cuid()) @map("_id")
+  name       String
+  telephone  String
+  address    String
+  created_at DateTime @default(now())
+
+  sessions Session[]
+
+  @@map("clients")
+}
+
+model Session {
+  id          String   @id @default(cuid()) @map("_id")
+  appointment DateTime
+
+  procedure    Procedure @relation(fields: [procedure_id], references: [id])
+  procedure_id String
+
+  client    Client? @relation(fields: [client_id], references: [id])
+  client_id String?
+
+  @@map("sessions")
+}
+
+model Procedure {
+  id       String    @id @default(cuid()) @map("_id")
+  name     String    @unique
+  sessions Session[]
+
+  @@map("procedures")
+}

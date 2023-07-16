@@ -1,0 +1,84 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Procedure {
+  id: String!
+  name: String!
+  sessions: [Session!]!
+}
+
+type Session {
+  id: String!
+  appointment: DateTime!
+  procedure: Procedure!
+  client: Client!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Client {
+  id: String!
+  name: String!
+  telephone: String!
+  address: String!
+  created_at: DateTime!
+  sessions: [Session!]!
+}
+
+type Query {
+  session(id: String!): Session!
+  client(id: String!): Client!
+  procedures: [Procedure!]!
+  procedure(id: String!): Procedure!
+}
+
+type Mutation {
+  createSession(createSessionInput: CreateSessionInput!): Session!
+  updateSession(updateSessionInput: UpdateSessionInput!): Session!
+  removeSession(id: String!): Session!
+  createClient(createClientInput: CreateClientInput!): Client!
+  updateClient(updateClientInput: UpdateClientInput!): Client!
+  removeClient(id: String!): Client!
+  createProcedure(createProcedureInput: CreateProcedureInput!): Procedure!
+  updateProcedure(updateProcedureInput: UpdateProcedureInput!): Procedure!
+  removeProcedure(id: String!): Procedure!
+}
+
+input CreateSessionInput {
+  appointment: DateTime!
+  procedureId: String!
+  clientId: String!
+}
+
+input UpdateSessionInput {
+  appointment: DateTime!
+  procedureId: String!
+  clientId: String!
+  id: String!
+}
+
+input CreateClientInput {
+  name: String!
+  telephone: String!
+  address: String!
+}
+
+input UpdateClientInput {
+  name: String!
+  telephone: String!
+  address: String!
+  id: String!
+}
+
+input CreateProcedureInput {
+  name: String!
+}
+
+input UpdateProcedureInput {
+  name: String!
+  id: String!
+}
