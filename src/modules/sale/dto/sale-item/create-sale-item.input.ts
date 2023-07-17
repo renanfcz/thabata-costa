@@ -1,13 +1,16 @@
 import { InputType, Field } from '@nestjs/graphql'
 
 @InputType()
-export class CreateProcedureInput {
+export class CreateSaleItemInput {
   @Field(() => String)
-  name: string
+  id: string
 
   @Field(() => Number)
-  price: number
+  value: number
 
   @Field(() => Number)
-  sessionsNum: number
+  discount: number
+
+  @Field(() => String)
+  procedure_id: string
 }

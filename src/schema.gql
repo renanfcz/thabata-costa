@@ -2,17 +2,10 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Procedure {
-  id: String!
-  name: String!
-  sessions: [Session!]!
-}
-
 type Session {
   id: String!
   appointment: DateTime!
-  procedure: Procedure!
-  client: Client!
+  saleItem: SaleItem!
 }
 
 """
@@ -20,20 +13,49 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+type Procedure {
+  id: String!
+  name: String!
+  price: Float!
+  sessionsNum: Float!
+  sessions: [Session!]!
+}
+
+type SaleItem {
+  id: String!
+  value: Float!
+  discount: Float!
+  procedure: Procedure!
+  sale: Sale!
+  sessions: [Sale!]!
+}
+
+type Sale {
+  id: String!
+  discount: Float!
+  created_at: DateTime!
+  saleItems: [SaleItem!]!
+  client: Client!
+}
+
 type Client {
   id: String!
   name: String!
   telephone: String!
   address: String!
   created_at: DateTime!
-  sessions: [Session!]!
+  sales: [Sale!]!
 }
 
 type Query {
-  session(id: String!): Session!
-  client(id: String!): Client!
-  procedures: [Procedure!]!
-  procedure(id: String!): Procedure!
+  findAllSessions: [Session!]!
+  findOneSession(id: String!): Session!
+  findAllClients: [Client!]!
+  findOneClient(id: String!): Client!
+  findAllProcedures: [Procedure!]!
+  findOneProcedure(id: String!): Procedure!
+  findAllSales: [Sale!]!
+  findOneSale(id: String!): Sale!
 }
 
 type Mutation {
@@ -46,18 +68,19 @@ type Mutation {
   createProcedure(createProcedureInput: CreateProcedureInput!): Procedure!
   updateProcedure(updateProcedureInput: UpdateProcedureInput!): Procedure!
   removeProcedure(id: String!): Procedure!
+  createSale(createSaleInput: CreateSaleInput!): Sale!
+  updateSale(updateSaleInput: UpdateSaleInput!): Sale!
+  removeSale(id: String!): Sale!
 }
 
 input CreateSessionInput {
   appointment: DateTime!
-  procedureId: String!
-  clientId: String!
+  saleItemId: String!
 }
 
 input UpdateSessionInput {
   appointment: DateTime!
-  procedureId: String!
-  clientId: String!
+  saleItemId: String
   id: String!
 }
 
@@ -76,9 +99,33 @@ input UpdateClientInput {
 
 input CreateProcedureInput {
   name: String!
+  price: Float!
+  sessionsNum: Float!
 }
 
 input UpdateProcedureInput {
   name: String!
+  price: Float
+  sessionsNum: Float!
+  id: String!
+}
+
+input CreateSaleInput {
+  discount: Float!
+  clientId: String!
+  saleItems: [CreateSaleItemInput!]!
+}
+
+input CreateSaleItemInput {
+  id: String!
+  value: Float!
+  discount: Float!
+  procedure_id: String!
+}
+
+input UpdateSaleInput {
+  discount: Float!
+  clientId: String
+  saleItems: [CreateSaleItemInput!]!
   id: String!
 }

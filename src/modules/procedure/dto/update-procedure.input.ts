@@ -8,4 +8,7 @@ export class UpdateProcedureInput extends PartialType(CreateProcedureInput) {
 
   @Field(() => String)
   name: string
+
+  @Field(() => Number)
+  sessionsNum: number
 }

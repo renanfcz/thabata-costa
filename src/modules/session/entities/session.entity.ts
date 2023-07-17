@@ -1,6 +1,5 @@
 import { ObjectType, Field } from '@nestjs/graphql'
-import { Client } from 'src/modules/client/entities/client.entity'
-import { Procedure } from 'src/modules/procedure/entities/procedure.entity'
+import { SaleItem } from 'src/modules/sale/entities/sale-item.entity'
 
 @ObjectType()
 export class Session {
@@ -10,9 +9,6 @@ export class Session {
   @Field(() => Date)
   appointment: Date
 
-  @Field(() => Procedure)
-  procedure: Procedure
-
-  @Field(() => Client)
-  client: Client
+  @Field(() => SaleItem)
+  saleItem: SaleItem
 }

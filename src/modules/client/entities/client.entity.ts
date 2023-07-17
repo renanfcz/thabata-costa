@@ -1,5 +1,5 @@
 import { ObjectType, Field } from '@nestjs/graphql'
-import { Session } from 'src/modules/session/entities/session.entity'
+import { Sale } from 'src/modules/sale/entities/sale.entity'
 
 @ObjectType()
 export class Client {
@@ -18,6 +18,6 @@ export class Client {
   @Field(() => Date)
   created_at: Date
 
-  @Field(() => [Session])
-  sessions: Session[]
+  @Field(() => [Sale])
+  sales: Sale[]
 }

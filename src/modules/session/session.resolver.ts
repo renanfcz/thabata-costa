@@ -15,13 +15,13 @@ export class SessionResolver {
     return this.sessionService.create(createSessionInput)
   }
 
-  @Query(() => [Session], { name: 'session' })
-  findAll() {
+  @Query(() => [Session])
+  findAllSessions() {
     return this.sessionService.findAll()
   }
 
-  @Query(() => Session, { name: 'session' })
-  findOne(@Args('id', { type: () => String }) id: string) {
+  @Query(() => Session)
+  findOneSession(@Args('id', { type: () => String }) id: string) {
     return this.sessionService.findOne(id)
   }
 

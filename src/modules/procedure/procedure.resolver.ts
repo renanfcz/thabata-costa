@@ -15,13 +15,13 @@ export class ProcedureResolver {
     return this.procedureService.create(createProcedureInput)
   }
 
-  @Query(() => [Procedure], { name: 'procedures' })
-  findAll() {
+  @Query(() => [Procedure])
+  findAllProcedures() {
     return this.procedureService.findAll()
   }
 
-  @Query(() => Procedure, { name: 'procedure' })
-  findOne(@Args('id', { type: () => String }) id: string) {
+  @Query(() => Procedure)
+  findOneProcedure(@Args('id', { type: () => String }) id: string) {
     return this.procedureService.findOne(id)
   }
 

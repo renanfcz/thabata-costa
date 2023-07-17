@@ -5,6 +5,7 @@ import { join } from 'path'
 import { ClientModule } from './modules/client/client.module'
 import { ProcedureModule } from './modules/procedure/procedure.module'
 import { SessionModule } from './modules/session/session.module'
+import { SaleModule } from './modules/sale/sale.module'
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { SessionModule } from './modules/session/session.module'
     SessionModule,
     ClientModule,
     ProcedureModule,
+    SaleModule,
   ],
 })
 export class AppModule {}

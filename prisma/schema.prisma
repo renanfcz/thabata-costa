@@ -17,28 +17,57 @@ model Client {
   address    String
   created_at DateTime @default(now())
 
-  sessions Session[]
+  sales Sale[]
 
   @@map("clients")
+}
+
+model Sale {
+  id         String   @id @default(cuid()) @map("_id")
+  discount   Float
+  created_at DateTime @default(now())
+
+  saleItems SaleItem[]
+
+  client    Client? @relation(fields: [client_id], references: [id])
+  client_id String?
+
+  @@map("sale")
+}
+
+model SaleItem {
+  id       String @id @default(cuid()) @map("_id")
+  value    Float
+  discount Float
+
+  procedure    Procedure @relation(fields: [procedure_id], references: [id])
+  procedure_id String
+
+  sale    Sale?   @relation(fields: [sale_id], references: [id])
+  sale_id String?
+
+  sessions Session[]
+
+  @@map("saleItem")
+}
+
+model Procedure {
+  id          String @id @default(cuid()) @map("_id")
+  name        String @unique
+  price       Float
+  sessionsNum Int
+
+  saleItem SaleItem[]
+
+  @@map("procedures")
 }
 
 model Session {
   id          String   @id @default(cuid()) @map("_id")
   appointment DateTime
 
-  procedure    Procedure @relation(fields: [procedure_id], references: [id])
-  procedure_id String
-
-  client    Client? @relation(fields: [client_id], references: [id])
-  client_id String?
+  saleItem    SaleItem? @relation(fields: [saleItem_id], references: [id])
+  saleItem_id String?
 
   @@map("sessions")
-}
-
-model Procedure {
-  id       String    @id @default(cuid()) @map("_id")
-  name     String    @unique
-  sessions Session[]
-
-  @@map("procedures")
 }

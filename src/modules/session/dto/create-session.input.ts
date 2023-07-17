@@ -6,8 +6,5 @@ export class CreateSessionInput {
   appointment: Date
 
   @Field(() => String)
-  procedureId: string
-
-  @Field(() => String)
-  clientId: string
+  saleItemId: string
 }

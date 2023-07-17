@@ -26,9 +26,9 @@ export class SessionService {
       const sessionSaved = await this.prisma.session.create({
         data: {
           appointment: createSessionInput.appointment,
-          client: { connect: { id: createSessionInput.clientId } },
-          procedure: { connect: { id: createSessionInput.procedureId } },
+          saleItem: { connect: { id: createSessionInput.saleItemId } },
         },
+        include: { saleItem: true },
       })
       return sessionSaved
     } catch (error) {
@@ -37,12 +37,15 @@ export class SessionService {
   }
 
   async findAll() {
-    return await this.prisma.session.findMany()
+    return await this.prisma.session.findMany({
+      include: { saleItem: true },
+    })
   }
 
   async findOne(id: string) {
     return await this.prisma.session.findFirst({
       where: { id },
+      include: { saleItem: true },
     })
   }
 
@@ -65,10 +68,8 @@ export class SessionService {
         where: { id },
         data: {
           appointment: updateSessionInput.appointment,
-          procedure: {
-            update: { data: updateSessionInput.procedureId },
-          },
         },
+        include: { saleItem: true },
       })
     } catch (error) {
       throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR)
