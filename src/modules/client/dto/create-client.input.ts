@@ -6,8 +6,35 @@ export class CreateClientInput {
   name: string
 
   @Field(() => String)
-  telephone: string
+  cpf: string
+
+  @Field(() => Date)
+  dateBirth: Date
 
   @Field(() => String)
-  address: string
+  celphone: string
+
+  @Field(() => String)
+  state: string
+
+  @Field(() => String)
+  city: string
+
+  @Field(() => String)
+  street: string
+
+  @Field(() => Number)
+  number: number
+
+  @Field(() => String)
+  complement: string
+
+  @Field(() => String)
+  knowUs: string
+
+  @Field(() => String)
+  socialMediaId: string
+
+  @Field(() => String)
+  socialMedia: string
 }

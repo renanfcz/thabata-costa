@@ -6,5 +6,8 @@ export class CreateSessionInput {
   appointment: Date
 
   @Field(() => String)
+  obs?: string
+
+  @Field(() => String)
   saleItemId: string
 }

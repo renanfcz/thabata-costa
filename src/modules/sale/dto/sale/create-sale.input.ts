@@ -3,8 +3,11 @@ import { InputType, Field } from '@nestjs/graphql'
 
 @InputType()
 export class CreateSaleInput {
-  @Field(() => Number)
-  discount: number
+  @Field(() => String)
+  protocolName: string
+
+  @Field(() => String)
+  protocolDesc: string
 
   @Field(() => String)
   clientId: string

@@ -12,5 +12,5 @@ export class CreateSaleItemInput {
   discount: number
 
   @Field(() => String)
-  procedure_id: string
+  procedureId: string
 }

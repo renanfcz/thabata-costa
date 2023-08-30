@@ -1,3 +1,4 @@
+import { Indication } from './../../indication/entities/indication.entity'
 import { ObjectType, Field } from '@nestjs/graphql'
 import { Sale } from 'src/modules/sale/entities/sale.entity'
 
@@ -10,14 +11,47 @@ export class Client {
   name: string
 
   @Field(() => String)
-  telephone: string
-
-  @Field(() => String)
-  address: string
+  cpf: string
 
   @Field(() => Date)
-  created_at: Date
+  dateBirth: Date
+
+  @Field(() => String)
+  celphone: string
+
+  @Field(() => String)
+  state: string
+
+  @Field(() => String)
+  city: string
+
+  @Field(() => String)
+  street: string
+
+  @Field(() => Number)
+  number: number
+
+  @Field(() => String)
+  complement: string
+
+  @Field(() => [Indication])
+  indications: Indication[]
+
+  @Field(() => Date)
+  createdAt: Date
+
+  @Field(() => String)
+  knowUs: string
+
+  @Field(() => String)
+  socialMediaId: string
+
+  @Field(() => String)
+  socialMedia: string
 
   @Field(() => [Sale])
   sales: Sale[]
+
+  @Field(() => String)
+  clientStatus: string
 }

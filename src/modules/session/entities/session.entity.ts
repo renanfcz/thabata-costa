@@ -11,4 +11,7 @@ export class Session {
 
   @Field(() => SaleItem)
   saleItem: SaleItem
+
+  @Field(() => String)
+  obs?: string
 }

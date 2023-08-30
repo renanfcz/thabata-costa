@@ -2,10 +2,19 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Indication {
+  name: String!
+  celphone: String!
+  socialMedia: String!
+  socialMediaId: String!
+  clientId: String!
+}
+
 type Session {
   id: String!
   appointment: DateTime!
   saleItem: SaleItem!
+  obs: String!
 }
 
 """
@@ -17,7 +26,6 @@ type Procedure {
   id: String!
   name: String!
   price: Float!
-  sessionsNum: Float!
   sessions: [Session!]!
 }
 
@@ -41,10 +49,21 @@ type Sale {
 type Client {
   id: String!
   name: String!
-  telephone: String!
-  address: String!
-  created_at: DateTime!
+  cpf: String!
+  dateBirth: DateTime!
+  celphone: String!
+  state: String!
+  city: String!
+  street: String!
+  number: Float!
+  complement: String!
+  indications: [Indication!]!
+  createdAt: DateTime!
+  knowUs: String!
+  socialMediaId: String!
+  socialMedia: String!
   sales: [Sale!]!
+  clientStatus: String!
 }
 
 type Query {
@@ -56,6 +75,8 @@ type Query {
   findOneProcedure(id: String!): Procedure!
   findAllSales: [Sale!]!
   findOneSale(id: String!): Sale!
+  findAllIndications: [Indication!]!
+  findOneIndication(id: String!): Indication!
 }
 
 type Mutation {
@@ -69,49 +90,69 @@ type Mutation {
   updateProcedure(updateProcedureInput: UpdateProcedureInput!): Procedure!
   removeProcedure(id: String!): Procedure!
   createSale(createSaleInput: CreateSaleInput!): Sale!
-  updateSale(updateSaleInput: UpdateSaleInput!): Sale!
   removeSale(id: String!): Sale!
+  createIndication(createIndicationInput: CreateIndicationInput!): Indication!
+  removeIndication(id: String!): Indication!
 }
 
 input CreateSessionInput {
   appointment: DateTime!
+  obs: String!
   saleItemId: String!
 }
 
 input UpdateSessionInput {
   appointment: DateTime!
+  obs: String!
   saleItemId: String
   id: String!
 }
 
 input CreateClientInput {
   name: String!
-  telephone: String!
-  address: String!
+  cpf: String!
+  dateBirth: DateTime!
+  celphone: String!
+  state: String!
+  city: String!
+  street: String!
+  number: Float!
+  complement: String!
+  knowUs: String!
+  socialMediaId: String!
+  socialMedia: String!
 }
 
 input UpdateClientInput {
   name: String!
-  telephone: String!
-  address: String!
+  cpf: String!
+  dateBirth: DateTime!
+  celphone: String!
+  state: String!
+  city: String!
+  street: String!
+  number: Float!
+  complement: String!
+  knowUs: String!
+  socialMediaId: String!
+  socialMedia: String!
   id: String!
 }
 
 input CreateProcedureInput {
   name: String!
   price: Float!
-  sessionsNum: Float!
 }
 
 input UpdateProcedureInput {
   name: String!
   price: Float
-  sessionsNum: Float!
   id: String!
 }
 
 input CreateSaleInput {
-  discount: Float!
+  protocolName: String!
+  protocolDesc: String!
   clientId: String!
   saleItems: [CreateSaleItemInput!]!
 }
@@ -120,12 +161,13 @@ input CreateSaleItemInput {
   id: String!
   value: Float!
   discount: Float!
-  procedure_id: String!
+  procedureId: String!
 }
 
-input UpdateSaleInput {
-  discount: Float!
-  clientId: String
-  saleItems: [CreateSaleItemInput!]!
-  id: String!
+input CreateIndicationInput {
+  name: String!
+  celphone: String!
+  socialMedia: String!
+  socialMediaId: String!
+  clientId: String!
 }

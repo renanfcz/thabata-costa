@@ -7,9 +7,6 @@ export class UpdateSaleInput extends PartialType(CreateSaleInput) {
   @Field(() => String)
   id: string
 
-  @Field(() => Number)
-  discount: number
-
   @Field(() => [CreateSaleItemInput])
   saleItems: CreateSaleItemInput[]
 }

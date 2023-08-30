@@ -12,9 +12,6 @@ export class Procedure {
   @Field(() => Number)
   price: number
 
-  @Field(() => Number)
-  sessionsNum: number
-
   @Field(() => [Session])
   sessions: Session[]
 }

@@ -7,7 +7,4 @@ export class CreateProcedureInput {
 
   @Field(() => Number)
   price: number
-
-  @Field(() => Number)
-  sessionsNum: number
 }

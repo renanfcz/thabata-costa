@@ -11,63 +11,79 @@ datasource db {
 }
 
 model Client {
-  id         String   @id @default(cuid()) @map("_id")
-  name       String
-  telephone  String
-  address    String
-  created_at DateTime @default(now())
-
-  sales Sale[]
+  id            String       @id @default(cuid()) @map("_id")
+  name          String
+  cpf           String
+  dateBirth     DateTime
+  celphone      String
+  state         String
+  city          String
+  street        String
+  number        Int
+  complement    String
+  indications   Indication[]
+  createdAt     DateTime     @default(now())
+  knowUs        String
+  socialMedia   String
+  socialMediaId String
+  sales         Sale[]
+  clientStatus  String       @default("Ativo")
 
   @@map("clients")
 }
 
+model Indication {
+  id              String  @id @default(cuid()) @map("_id")
+  name            String
+  celphone        String
+  socialMedia     String
+  socialMediaId   String
+  client          Client? @relation(fields: [clientId], references: [id])
+  clientId        String?
+
+  @@map("indication")
+}
+
 model Sale {
-  id         String   @id @default(cuid()) @map("_id")
-  discount   Float
-  created_at DateTime @default(now())
-
-  saleItems SaleItem[]
-
-  client    Client? @relation(fields: [client_id], references: [id])
-  client_id String?
+  id           String     @id @default(cuid()) @map("_id")
+  protocolName String
+  protocolDesc String
+  saleItems    SaleItem[]
+  client       Client?    @relation(fields: [clientId], references: [id])
+  clientId     String?
+  createdAt    DateTime   @default(now())
 
   @@map("sale")
 }
 
 model SaleItem {
-  id       String @id @default(cuid()) @map("_id")
-  value    Float
-  discount Float
-
-  procedure    Procedure @relation(fields: [procedure_id], references: [id])
-  procedure_id String
-
-  sale    Sale?   @relation(fields: [sale_id], references: [id])
-  sale_id String?
-
-  sessions Session[]
+  id          String    @id @default(cuid()) @map("_id")
+  procedure   Procedure @relation(fields: [procedureId], references: [id])
+  procedureId String
+  value       Float
+  discount    Float
+  sale        Sale?     @relation(fields: [saleId], references: [id])
+  saleId      String?
+  sessions    Session[]
 
   @@map("saleItem")
 }
 
 model Procedure {
-  id          String @id @default(cuid()) @map("_id")
-  name        String @unique
-  price       Float
-  sessionsNum Int
-
+  id       String     @id @default(cuid()) @map("_id")
+  name     String     @unique
+  price    Float
   saleItem SaleItem[]
 
   @@map("procedures")
 }
 
 model Session {
-  id          String   @id @default(cuid()) @map("_id")
+  id          String    @id @default(cuid()) @map("_id")
   appointment DateTime
-
-  saleItem    SaleItem? @relation(fields: [saleItem_id], references: [id])
-  saleItem_id String?
+  obs         String?
+  saleItem    SaleItem? @relation(fields: [saleItemId], references: [id])
+  saleItemId  String?
 
   @@map("sessions")
 }

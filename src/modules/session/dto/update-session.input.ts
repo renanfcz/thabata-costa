@@ -8,4 +8,7 @@ export class UpdateSessionInput extends PartialType(CreateSessionInput) {
 
   @Field(() => Date)
   appointment: Date
+
+  @Field(() => String)
+  obs?: string
 }
