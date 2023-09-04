@@ -12,7 +12,8 @@ type Indication {
 
 type Session {
   id: String!
-  appointment: DateTime!
+  initDate: DateTime!
+  finalDate: DateTime!
   saleItem: SaleItem!
   obs: String!
 }
@@ -40,8 +41,9 @@ type SaleItem {
 
 type Sale {
   id: String!
-  discount: Float!
-  created_at: DateTime!
+  protocolName: String!
+  protocolDesc: String!
+  createdAt: DateTime!
   saleItems: [SaleItem!]!
   client: Client!
 }
@@ -71,6 +73,7 @@ type Query {
   findOneSession(id: String!): Session!
   findAllClients: [Client!]!
   findOneClient(id: String!): Client!
+  findClientByName(name: String!): Client!
   findAllProcedures: [Procedure!]!
   findOneProcedure(id: String!): Procedure!
   findAllSales: [Sale!]!
@@ -84,7 +87,7 @@ type Mutation {
   updateSession(updateSessionInput: UpdateSessionInput!): Session!
   removeSession(id: String!): Session!
   createClient(createClientInput: CreateClientInput!): Client!
-  updateClient(updateClientInput: UpdateClientInput!): Client!
+  updateClient(clientId: String!, updateClientInput: UpdateClientInput!): Client!
   removeClient(id: String!): Client!
   createProcedure(createProcedureInput: CreateProcedureInput!): Procedure!
   updateProcedure(updateProcedureInput: UpdateProcedureInput!): Procedure!
@@ -96,13 +99,15 @@ type Mutation {
 }
 
 input CreateSessionInput {
-  appointment: DateTime!
+  initDate: DateTime!
+  finalDate: DateTime!
   obs: String!
   saleItemId: String!
 }
 
 input UpdateSessionInput {
-  appointment: DateTime!
+  initDate: DateTime!
+  finalDate: DateTime!
   obs: String!
   saleItemId: String
   id: String!
@@ -136,7 +141,6 @@ input UpdateClientInput {
   knowUs: String!
   socialMediaId: String!
   socialMedia: String!
-  id: String!
 }
 
 input CreateProcedureInput {
@@ -158,7 +162,6 @@ input CreateSaleInput {
 }
 
 input CreateSaleItemInput {
-  id: String!
   value: Float!
   discount: Float!
   procedureId: String!

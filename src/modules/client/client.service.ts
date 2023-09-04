@@ -52,21 +52,17 @@ export class ClientService {
     })
   }
 
-  async update(id: string, updateClientInput: UpdateClientInput) {
-    const existsClient = await this.prisma.client.findFirst({
-      where: {
-        id,
+  async findByName(name: string) {
+    return await this.prisma.client.findFirst({
+      where: { name },
+      include: {
+        indications: true,
+        sales: true,
       },
     })
-    if (existsClient) {
-      throw new HttpException(
-        'O cliente com o nome ' +
-          updateClientInput.name +
-          ' já consta no banco de dados.',
-        HttpStatus.BAD_REQUEST,
-      )
-    }
+  }
 
+  async update(id: string, updateClientInput: UpdateClientInput) {
     try {
       return await this.prisma.client.update({
         where: { id },

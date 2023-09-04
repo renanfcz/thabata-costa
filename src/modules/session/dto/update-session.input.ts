@@ -7,7 +7,10 @@ export class UpdateSessionInput extends PartialType(CreateSessionInput) {
   id: string
 
   @Field(() => Date)
-  appointment: Date
+  initDate: Date
+
+  @Field(() => Date)
+  finalDate: Date
 
   @Field(() => String)
   obs?: string

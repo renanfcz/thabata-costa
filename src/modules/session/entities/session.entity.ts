@@ -7,7 +7,10 @@ export class Session {
   id: string
 
   @Field(() => Date)
-  appointment: Date
+  initDate: Date
+
+  @Field(() => Date)
+  finalDate: Date
 
   @Field(() => SaleItem)
   saleItem: SaleItem

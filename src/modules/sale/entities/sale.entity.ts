@@ -7,11 +7,14 @@ export class Sale {
   @Field(() => String)
   id: string
 
-  @Field(() => Number)
-  discount: number
+  @Field(() => String)
+  protocolName: string
+
+  @Field(() => String)
+  protocolDesc: string
 
   @Field(() => Date)
-  created_at: Date
+  createdAt: Date
 
   @Field(() => [SaleItem])
   saleItems: SaleItem[]

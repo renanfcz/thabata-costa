@@ -33,13 +33,13 @@ model Client {
 }
 
 model Indication {
-  id              String  @id @default(cuid()) @map("_id")
-  name            String
-  celphone        String
-  socialMedia     String
-  socialMediaId   String
-  client          Client? @relation(fields: [clientId], references: [id])
-  clientId        String?
+  id            String  @id @default(cuid()) @map("_id")
+  name          String
+  celphone      String
+  socialMedia   String
+  socialMediaId String
+  client        Client? @relation(fields: [clientId], references: [id])
+  clientId      String?
 
   @@map("indication")
 }
@@ -79,11 +79,12 @@ model Procedure {
 }
 
 model Session {
-  id          String    @id @default(cuid()) @map("_id")
-  appointment DateTime
-  obs         String?
-  saleItem    SaleItem? @relation(fields: [saleItemId], references: [id])
-  saleItemId  String?
+  id         String    @id @default(cuid()) @map("_id")
+  initDate   DateTime
+  finalDate  DateTime
+  obs        String?   @default("")
+  saleItem   SaleItem? @relation(fields: [saleItemId], references: [id])
+  saleItemId String?
 
   @@map("sessions")
 }

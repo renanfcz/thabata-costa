@@ -25,11 +25,17 @@ export class ClientResolver {
     return this.clientService.findOne(id)
   }
 
+  @Query(() => Client)
+  findClientByName(@Args('name', { type: () => String }) name: string) {
+    return this.clientService.findByName(name)
+  }
+
   @Mutation(() => Client)
   updateClient(
+    @Args('clientId', { type: () => String }) clientId: string,
     @Args('updateClientInput') updateClientInput: UpdateClientInput,
   ) {
-    return this.clientService.update(updateClientInput.id, updateClientInput)
+    return this.clientService.update(clientId, updateClientInput)
   }
 
   @Mutation(() => Client)
