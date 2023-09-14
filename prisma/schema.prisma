@@ -65,6 +65,7 @@ model SaleItem {
   sale        Sale?     @relation(fields: [saleId], references: [id])
   saleId      String?
   sessions    Session[]
+  sessionsNum Int
 
   @@map("saleItem")
 }

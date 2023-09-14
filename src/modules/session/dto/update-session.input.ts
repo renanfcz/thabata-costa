@@ -14,4 +14,13 @@ export class UpdateSessionInput extends PartialType(CreateSessionInput) {
 
   @Field(() => String)
   obs?: string
+
+  @Field(() => String)
+  procedureId?: string
+
+  @Field(() => String)
+  procedureName?: string
+
+  @Field(() => String)
+  saleItemId?: string
 }

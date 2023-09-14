@@ -74,22 +74,37 @@ export class SessionService {
   async update(id: string, input: UpdateSessionInput) {
     const existsSession = await this.prisma.session.findFirst({
       where: {
-        OR: [
+        NOT: {
+          id,
+        },
+        AND: [
           {
             initDate: {
               gte: input.initDate,
+            },
+            finalDate: {
               lte: input.finalDate,
             },
           },
           {
-            finalDate: {
-              gte: input.initDate,
-              lte: input.finalDate,
-            },
+            OR: [
+              {
+                initDate: {
+                  lte: input.finalDate,
+                },
+              },
+              {
+                finalDate: {
+                  gte: input.initDate,
+                },
+              },
+            ],
           },
         ],
       },
     })
+    console.log(existsSession)
+    console.log(input)
     if (existsSession) {
       throw new HttpException(
         'Já existe uma sessão maracada para o dia e horário ',
@@ -98,13 +113,32 @@ export class SessionService {
     }
 
     try {
+      const procedure = await this.prisma.procedure.findFirst({
+        where: {
+          name: input.procedureName,
+        },
+      })
+      await this.prisma.saleItem.update({
+        where: {
+          id: input.saleItemId,
+        },
+        data: {
+          procedureId: procedure.id,
+        },
+      })
       return await this.prisma.session.update({
         where: { id },
         data: {
           initDate: input.initDate,
           finalDate: input.finalDate,
         },
-        include: { saleItem: true },
+        include: {
+          saleItem: {
+            include: {
+              procedure: true,
+            },
+          },
+        },
       })
     } catch (error) {
       throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR)

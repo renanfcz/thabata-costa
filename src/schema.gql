@@ -3,6 +3,7 @@
 # ------------------------------------------------------
 
 type Indication {
+  id: String!
   name: String!
   celphone: String!
   socialMedia: String!
@@ -36,7 +37,8 @@ type SaleItem {
   discount: Float!
   procedure: Procedure!
   sale: Sale!
-  sessions: [Sale!]!
+  sessions: [Session!]!
+  sessionsNum: Float!
 }
 
 type Sale {
@@ -94,6 +96,7 @@ type Mutation {
   removeProcedure(id: String!): Procedure!
   createSale(createSaleInput: CreateSaleInput!): Sale!
   removeSale(id: String!): Sale!
+  updateSale(id: String!, sale: UpdateSaleInput!): Sale!
   createIndication(createIndicationInput: CreateIndicationInput!): Indication!
   removeIndication(id: String!): Indication!
 }
@@ -109,8 +112,10 @@ input UpdateSessionInput {
   initDate: DateTime!
   finalDate: DateTime!
   obs: String!
-  saleItemId: String
+  saleItemId: String!
   id: String!
+  procedureId: String!
+  procedureName: String!
 }
 
 input CreateClientInput {
@@ -165,6 +170,14 @@ input CreateSaleItemInput {
   value: Float!
   discount: Float!
   procedureId: String!
+  sessionsNum: Float!
+}
+
+input UpdateSaleInput {
+  protocolName: String
+  protocolDesc: String!
+  clientId: String
+  saleItems: [CreateSaleItemInput!]
 }
 
 input CreateIndicationInput {

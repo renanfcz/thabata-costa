@@ -10,4 +10,7 @@ export class CreateSaleItemInput {
 
   @Field(() => String)
   procedureId: string
+
+  @Field(() => Number)
+  sessionsNum: number
 }

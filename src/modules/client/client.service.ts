@@ -37,7 +37,24 @@ export class ClientService {
     return await this.prisma.client.findMany({
       include: {
         indications: true,
-        sales: true,
+        sales: {
+          include: {
+            saleItems: {
+              include: {
+                sessions: {
+                  include: {
+                    saleItem: {
+                      include: {
+                        procedure: true,
+                      },
+                    },
+                  },
+                },
+                procedure: true,
+              },
+            },
+          },
+        },
       },
     })
   }
@@ -47,7 +64,24 @@ export class ClientService {
       where: { id },
       include: {
         indications: true,
-        sales: true,
+        sales: {
+          include: {
+            saleItems: {
+              include: {
+                sessions: {
+                  include: {
+                    saleItem: {
+                      include: {
+                        procedure: true,
+                      },
+                    },
+                  },
+                },
+                procedure: true,
+              },
+            },
+          },
+        },
       },
     })
   }
@@ -57,7 +91,24 @@ export class ClientService {
       where: { name },
       include: {
         indications: true,
-        sales: true,
+        sales: {
+          include: {
+            saleItems: {
+              include: {
+                sessions: {
+                  include: {
+                    saleItem: {
+                      include: {
+                        procedure: true,
+                      },
+                    },
+                  },
+                },
+                procedure: true,
+              },
+            },
+          },
+        },
       },
     })
   }

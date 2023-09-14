@@ -20,6 +20,9 @@ export class SaleItem {
   @Field(() => Sale)
   sale: Sale
 
-  @Field(() => [Sale])
+  @Field(() => [Session])
   sessions: Session[]
+
+  @Field(() => Number)
+  sessionsNum: number
 }
