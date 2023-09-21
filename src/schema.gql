@@ -48,6 +48,7 @@ type Sale {
   createdAt: DateTime!
   saleItems: [SaleItem!]!
   client: Client!
+  paymentType: String!
 }
 
 type Client {
@@ -164,6 +165,7 @@ input CreateSaleInput {
   protocolDesc: String!
   clientId: String!
   saleItems: [CreateSaleItemInput!]!
+  paymentType: String!
 }
 
 input CreateSaleItemInput {
@@ -178,6 +180,7 @@ input UpdateSaleInput {
   protocolDesc: String!
   clientId: String
   saleItems: [CreateSaleItemInput!]
+  paymentType: String
 }
 
 input CreateIndicationInput {

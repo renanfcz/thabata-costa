@@ -2,7 +2,6 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
 import { PrismaService } from 'src/database/prisma.service'
 import { CreateSaleInput } from './dto/sale/create-sale.input'
 import { UpdateSaleInput } from './dto/sale/update-sale.input'
-import { Sale } from './entities/sale.entity'
 
 @Injectable()
 export class SaleService {
@@ -17,6 +16,7 @@ export class SaleService {
         saleItems: {
           createMany: { data: createSaleInput.saleItems },
         },
+        paymentType: createSaleInput.paymentType,
       },
       include: { saleItems: true, client: true },
     })

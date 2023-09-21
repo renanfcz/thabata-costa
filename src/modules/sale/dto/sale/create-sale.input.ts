@@ -14,4 +14,7 @@ export class CreateSaleInput {
 
   @Field(() => [CreateSaleItemInput])
   saleItems: CreateSaleItemInput[]
+
+  @Field(() => String)
+  paymentType: string
 }

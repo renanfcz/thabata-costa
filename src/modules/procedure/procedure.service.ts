@@ -16,9 +16,9 @@ export class ProcedureService {
 
     if (existsProcedure) {
       throw new HttpException(
-        'O procedimento com o nome ' +
+        'O procedimento com o nome "' +
           createProcedureInput.name +
-          ' já consta no banco de dados.',
+          '" já consta no banco de dados.',
         HttpStatus.BAD_REQUEST,
       )
     }

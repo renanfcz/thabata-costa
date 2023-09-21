@@ -21,4 +21,7 @@ export class Sale {
 
   @Field(() => Client)
   client: Client
+
+  @Field(() => String)
+  paymentType: string
 }
