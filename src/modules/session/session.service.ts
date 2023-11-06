@@ -58,7 +58,12 @@ export class SessionService {
     return await this.prisma.session.findMany({
       include: {
         saleItem: {
-          include: { procedure: true },
+          include: {
+            procedure: true,
+            sale: {
+              include: { client: true },
+            },
+          },
         },
       },
     })
