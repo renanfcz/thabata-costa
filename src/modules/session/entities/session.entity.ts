@@ -13,7 +13,7 @@ export class Session {
   finalDate: Date
 
   @Field(() => SaleItem)
-  saleItem: SaleItem
+  saleItem?: SaleItem
 
   @Field(() => String)
   obs?: string

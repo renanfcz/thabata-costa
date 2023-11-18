@@ -15,10 +15,10 @@ export class SaleItem {
   discount: number
 
   @Field(() => Procedure)
-  procedure: Procedure
+  procedure?: Procedure
 
   @Field(() => Sale)
-  sale: Sale
+  sale?: Sale
 
   @Field(() => [Session])
   sessions: Session[]

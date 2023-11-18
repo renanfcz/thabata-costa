@@ -32,7 +32,7 @@ export class SessionResolver {
     return this.sessionService.update(updateSessionInput.id, updateSessionInput)
   }
 
-  @Mutation(() => Session)
+  @Mutation(() => Number)
   removeSession(@Args('id', { type: () => String }) id: string) {
     return this.sessionService.remove(id)
   }

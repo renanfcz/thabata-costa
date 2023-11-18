@@ -29,6 +29,7 @@ type Procedure {
   name: String!
   price: Float!
   sessions: [Session!]!
+  color: String!
 }
 
 type SaleItem {
@@ -88,7 +89,7 @@ type Query {
 type Mutation {
   createSession(createSessionInput: CreateSessionInput!): Session!
   updateSession(updateSessionInput: UpdateSessionInput!): Session!
-  removeSession(id: String!): Session!
+  removeSession(id: String!): Float!
   createClient(createClientInput: CreateClientInput!): Client!
   updateClient(clientId: String!, updateClientInput: UpdateClientInput!): Client!
   removeClient(id: String!): Client!
@@ -106,17 +107,19 @@ input CreateSessionInput {
   initDate: DateTime!
   finalDate: DateTime!
   obs: String!
-  saleItemId: String!
+  clientId: String!
+  procedureId: String!
 }
 
 input UpdateSessionInput {
   initDate: DateTime!
   finalDate: DateTime!
   obs: String!
-  saleItemId: String!
-  id: String!
+  clientId: String
   procedureId: String!
+  id: String!
   procedureName: String!
+  saleItemId: String!
 }
 
 input CreateClientInput {
@@ -152,11 +155,13 @@ input UpdateClientInput {
 input CreateProcedureInput {
   name: String!
   price: Float!
+  color: String!
 }
 
 input UpdateProcedureInput {
   name: String!
   price: Float
+  color: String!
   id: String!
 }
 

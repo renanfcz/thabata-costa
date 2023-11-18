@@ -76,6 +76,7 @@ model Procedure {
   name     String     @unique
   price    Float
   saleItem SaleItem[]
+  color    String
 
   @@map("procedures")
 }

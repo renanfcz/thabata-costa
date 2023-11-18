@@ -7,4 +7,7 @@ export class CreateProcedureInput {
 
   @Field(() => Number)
   price: number
+
+  @Field(() => String)
+  color: string
 }

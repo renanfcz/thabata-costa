@@ -14,4 +14,7 @@ export class Procedure {
 
   @Field(() => [Session])
   sessions: Session[]
+
+  @Field(() => String)
+  color: string
 }

@@ -8,6 +8,16 @@ export class ProcedureService {
   constructor(private prisma: PrismaService) {}
 
   async create(createProcedureInput: CreateProcedureInput) {
+    if (
+      createProcedureInput.color === undefined ||
+      createProcedureInput.color === ''
+    ) {
+      throw new HttpException(
+        'Você deve escolher uma Cor para o procedimento.',
+        HttpStatus.BAD_REQUEST,
+      )
+    }
+
     const existsProcedure = await this.prisma.procedure.findFirst({
       where: {
         name: createProcedureInput.name,
