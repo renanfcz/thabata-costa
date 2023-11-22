@@ -2,6 +2,23 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Auth {
+  token: String!
+}
+
+type User {
+  id: String!
+  name: String!
+  email: String!
+  password: String!
+  createdAt: DateTime!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
 type Indication {
   id: String!
   name: String!
@@ -18,11 +35,6 @@ type Session {
   saleItem: SaleItem!
   obs: String!
 }
-
-"""
-A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
-"""
-scalar DateTime
 
 type Procedure {
   id: String!
@@ -84,6 +96,12 @@ type Query {
   findOneSale(id: String!): Sale!
   findAllIndications: [Indication!]!
   findOneIndication(id: String!): Indication!
+  authenticate(authInput: AuthenticateInput!): Auth!
+}
+
+input AuthenticateInput {
+  email: String!
+  password: String!
 }
 
 type Mutation {
@@ -101,6 +119,7 @@ type Mutation {
   updateSale(id: String!, sale: UpdateSaleInput!): Sale!
   createIndication(createIndicationInput: CreateIndicationInput!): Indication!
   removeIndication(id: String!): Indication!
+  createUser(createUserInput: CreateUserInput!): User!
 }
 
 input CreateSessionInput {
@@ -194,4 +213,10 @@ input CreateIndicationInput {
   socialMedia: String!
   socialMediaId: String!
   clientId: String!
+}
+
+input CreateUserInput {
+  name: String!
+  email: String!
+  password: String!
 }

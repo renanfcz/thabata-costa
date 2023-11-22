@@ -2,11 +2,13 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo'
 import { Module } from '@nestjs/common'
 import { GraphQLModule } from '@nestjs/graphql'
 import { join } from 'path'
+
+import { AuthModule } from './modules/auth/auth.module'
 import { ClientModule } from './modules/client/client.module'
-import { ProcedureModule } from './modules/procedure/procedure.module'
-import { SessionModule } from './modules/session/session.module'
-import { SaleModule } from './modules/sale/sale.module'
 import { IndicationModule } from './modules/indication/indication.module'
+import { ProcedureModule } from './modules/procedure/procedure.module'
+import { SaleModule } from './modules/sale/sale.module'
+import { SessionModule } from './modules/session/session.module'
 
 @Module({
   imports: [
@@ -19,6 +21,7 @@ import { IndicationModule } from './modules/indication/indication.module'
     ProcedureModule,
     SaleModule,
     IndicationModule,
+    AuthModule,
   ],
 })
 export class AppModule {}
