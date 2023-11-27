@@ -1,5 +1,5 @@
 # Sistema de gestão de Clinica de estética
-Este projeto corresponde ao backend de uma aplicação de gestão para uma clínica de estética, oferecendo funcionalidades abrangentes para gerenciamento de clientes, agenda de atendimentos, venda de procedimentos e gestão financeira.
+Este projeto corresponde ao back-end de uma aplicação de gestão para uma clínica de estética, oferecendo funcionalidades abrangentes para gerenciamento de clientes, agenda de atendimentos, venda de procedimentos e gestão financeira.
 
 ## Índices
 
