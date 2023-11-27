@@ -2,12 +2,13 @@
 Este projeto corresponde ao back-end de uma aplicação de gestão para uma clínica de estética, oferecendo funcionalidades abrangentes para gerenciamento de clientes, agenda de atendimentos, venda de procedimentos e gestão financeira.
 
 ## Índices
-
-- <a>Funcionalidades do projeto</a>
-- <a>Como rodar o projeto</a>
-- <a>Técnologias utilizadas</a>
-- <a>Autores</a>
-- <a>Próximos passos</a>
+- [Sistema de gestão de Clinica de estética](#sistema-de-gestão-de-clinica-de-estética)
+  - [Índices](#índices)
+  - [Funcionalidades do projeto](#funcionalidades-do-projeto)
+  - [Como rodar o projeto](#como-rodar-o-projeto)
+  - [Técnologias utilizadas](#técnologias-utilizadas)
+  - [Autores](#autores)
+  - [Próximos passos](#próximos-passos)
 
 ## Funcionalidades do projeto
 - [x] Cadastro de clientes
