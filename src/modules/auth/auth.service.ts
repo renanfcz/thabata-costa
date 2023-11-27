@@ -5,6 +5,7 @@ import { PrismaService } from 'src/database/prisma.service'
 
 import { CreateUserInput } from './dto/create-user.input'
 import { User } from './entities/user.entity'
+import * as bcrypt from 'bcrypt'
 
 @Injectable()
 export class AuthService {
@@ -27,8 +28,12 @@ export class AuthService {
     }
 
     try {
+      const data = {
+        ...createAuthInput,
+        password: await bcrypt.hash(createAuthInput.password, 10),
+      }
       const userSaved = await this.prisma.user.create({
-        data: createAuthInput,
+        data,
       })
       return userSaved
     } catch (error) {
@@ -45,13 +50,15 @@ export class AuthService {
 
     const payload = { email: user.email, id: user.id }
 
-    const accessToken = await this.jwtService.signAsync(payload)
+    const accessToken = await this.jwtService.signAsync(payload, {
+      expiresIn: '60s',
+    })
 
     if (accessToken == null) {
       throw new Error('Erro na geração do token')
     }
 
-    return { token: accessToken }
+    return { user, token: accessToken }
   }
 
   private async validateUser(data: AuthenticateInput): Promise<User | null> {
@@ -63,7 +70,7 @@ export class AuthService {
       return null
     }
 
-    const passwordMatch = data.password === user.password
+    const passwordMatch = await bcrypt.compare(data.password, user.password)
 
     if (!passwordMatch) {
       return null
