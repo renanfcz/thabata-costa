@@ -12,7 +12,7 @@ Este projeto é uma aplicação de gestão para uma clínica de estética, ofere
 ## Funcionalidades do projeto
 - [x] Cadastro de clientes
 - [x] Criação de procedimentos
-- [x] Agendamentos de sessões
+- [x] Agendamento de sessões
 - [x] Venda de procedimentos e protocolos estéticos
 
 ## Como rodar o projeto
