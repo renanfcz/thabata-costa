@@ -1,4 +1,5 @@
 import { InputType, Field } from '@nestjs/graphql'
+import { KnowUs, SocialMedia } from '@prisma/client'
 
 @InputType()
 export class CreateClientInput {
@@ -20,21 +21,24 @@ export class CreateClientInput {
   @Field(() => String)
   city: string
 
-  @Field(() => String)
-  street: string
+  @Field(() => String, { nullable: true })
+  street?: string
 
-  @Field(() => Number)
-  number: number
+  @Field(() => Number, { nullable: true })
+  number?: number
 
-  @Field(() => String)
-  complement: string
+  @Field(() => String, { nullable: true })
+  complement?: string
 
-  @Field(() => String)
-  knowUs: string
+  @Field(() => KnowUs, { nullable: true })
+  knowUs?: KnowUs
 
-  @Field(() => String)
-  socialMediaId: string
+  @Field(() => String, { nullable: true })
+  recommendedBy?: string
 
-  @Field(() => String)
-  socialMedia: string
+  @Field(() => String, { nullable: true })
+  socialMediaId?: string
+
+  @Field(() => SocialMedia, { nullable: true })
+  socialMedia?: SocialMedia
 }

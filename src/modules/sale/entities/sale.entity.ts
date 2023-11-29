@@ -1,4 +1,5 @@
-import { ObjectType, Field } from '@nestjs/graphql'
+import { ObjectType, Field, registerEnumType } from '@nestjs/graphql'
+import { PaymentType } from '@prisma/client'
 import { Client } from 'src/modules/client/entities/client.entity'
 import { SaleItem } from './sale-item.entity'
 
@@ -22,6 +23,10 @@ export class Sale {
   @Field(() => Client)
   client: Client
 
-  @Field(() => String)
-  paymentType: string
+  @Field(() => PaymentType)
+  paymentType: PaymentType
 }
+
+registerEnumType(PaymentType, {
+  name: 'PaymentType',
+})

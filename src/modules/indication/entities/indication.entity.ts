@@ -1,4 +1,5 @@
-import { ObjectType, Field } from '@nestjs/graphql'
+import { ObjectType, Field, registerEnumType } from '@nestjs/graphql'
+import { SocialMedia } from '@prisma/client'
 
 @ObjectType()
 export class Indication {
@@ -11,12 +12,16 @@ export class Indication {
   @Field(() => String)
   celphone: string
 
-  @Field(() => String)
-  socialMedia: string
+  @Field(() => SocialMedia, { nullable: true })
+  socialMedia?: SocialMedia
 
-  @Field(() => String)
-  socialMediaId: string
+  @Field(() => String, { nullable: true })
+  socialMediaId?: string
 
   @Field(() => String)
   clientId: string
 }
+
+registerEnumType(SocialMedia, {
+  name: 'SocialMedia',
+})

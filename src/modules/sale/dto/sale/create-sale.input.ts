@@ -1,5 +1,6 @@
 import { CreateSaleItemInput } from './../sale-item/create-sale-item.input'
 import { InputType, Field } from '@nestjs/graphql'
+import { PaymentType } from '@prisma/client'
 
 @InputType()
 export class CreateSaleInput {
@@ -15,6 +16,6 @@ export class CreateSaleInput {
   @Field(() => [CreateSaleItemInput])
   saleItems: CreateSaleItemInput[]
 
-  @Field(() => String)
-  paymentType: string
+  @Field(() => PaymentType)
+  paymentType: PaymentType
 }

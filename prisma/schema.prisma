@@ -10,11 +10,40 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum ClientStatus {
+  ACTIVE
+  DISABLE
+}
+
+enum PaymentType {
+  MONEY
+  PIX
+  DEBIT
+  CREDIT
+}
+
+enum SessionStatus {
+  SCHEDULED
+  CANCELED
+  FINISHED
+}
+
+enum SocialMedia {
+  FACEBOOK
+  INSTAGRAM
+}
+
+enum KnowUs {
+  FACEBOOK
+  INSTAGRAM
+  INDICATION
+}
+
 model User {
-  id String @id @default(cuid()) @map("_id")
-  name String
-  email String
-  password String
+  id        String   @id @default(cuid()) @map("_id")
+  name      String
+  email     String
+  password  String
   createdAt DateTime @default(now())
 }
 
@@ -26,41 +55,42 @@ model Client {
   celphone      String
   state         String
   city          String
-  street        String
-  number        Int
-  complement    String
+  street        String?
+  number        Int?
+  complement    String?
   indications   Indication[]
   createdAt     DateTime     @default(now())
-  knowUs        String
-  socialMedia   String
-  socialMediaId String
+  knowUs        KnowUs?
+  recommendedBy String?
+  socialMedia   SocialMedia?
+  socialMediaId String?
   sales         Sale[]
-  clientStatus  String       @default("Ativo")
+  clientStatus  ClientStatus @default(ACTIVE)
 
   @@map("clients")
 }
 
 model Indication {
-  id            String  @id @default(cuid()) @map("_id")
+  id            String       @id @default(cuid()) @map("_id")
   name          String
   celphone      String
-  socialMedia   String
-  socialMediaId String
-  client        Client? @relation(fields: [clientId], references: [id])
+  socialMedia   SocialMedia?
+  socialMediaId String?
+  client        Client?      @relation(fields: [clientId], references: [id])
   clientId      String?
 
   @@map("indication")
 }
 
 model Sale {
-  id           String     @id @default(cuid()) @map("_id")
+  id           String      @id @default(cuid()) @map("_id")
   protocolName String
   protocolDesc String
   saleItems    SaleItem[]
-  client       Client?    @relation(fields: [clientId], references: [id])
+  client       Client?     @relation(fields: [clientId], references: [id])
   clientId     String?
-  createdAt    DateTime   @default(now())
-  paymentType  String
+  createdAt    DateTime    @default(now())
+  paymentType  PaymentType
 
   @@map("sale")
 }
@@ -90,12 +120,13 @@ model Procedure {
 }
 
 model Session {
-  id         String    @id @default(cuid()) @map("_id")
+  id         String        @id @default(cuid()) @map("_id")
   initDate   DateTime
   finalDate  DateTime
-  obs        String?   @default("")
-  saleItem   SaleItem? @relation(fields: [saleItemId], references: [id])
+  obs        String?
+  saleItem   SaleItem?     @relation(fields: [saleItemId], references: [id])
   saleItemId String?
+  status     SessionStatus @default(SCHEDULED)
 
   @@map("sessions")
 }

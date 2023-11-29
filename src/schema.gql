@@ -24,9 +24,14 @@ type Indication {
   id: String!
   name: String!
   celphone: String!
-  socialMedia: String!
-  socialMediaId: String!
+  socialMedia: SocialMedia
+  socialMediaId: String
   clientId: String!
+}
+
+enum SocialMedia {
+  FACEBOOK
+  INSTAGRAM
 }
 
 type Session {
@@ -35,6 +40,13 @@ type Session {
   finalDate: DateTime!
   saleItem: SaleItem!
   obs: String!
+  status: SessionStatus!
+}
+
+enum SessionStatus {
+  SCHEDULED
+  CANCELED
+  FINISHED
 }
 
 type Procedure {
@@ -62,7 +74,14 @@ type Sale {
   createdAt: DateTime!
   saleItems: [SaleItem!]!
   client: Client!
-  paymentType: String!
+  paymentType: PaymentType!
+}
+
+enum PaymentType {
+  MONEY
+  PIX
+  DEBIT
+  CREDIT
 }
 
 type Client {
@@ -78,11 +97,23 @@ type Client {
   complement: String!
   indications: [Indication!]!
   createdAt: DateTime!
-  knowUs: String!
-  socialMediaId: String!
-  socialMedia: String!
+  knowUs: KnowUs
+  recommendedBy: String
+  socialMediaId: String
+  socialMedia: String
   sales: [Sale!]!
-  clientStatus: String!
+  clientStatus: ClientStatus!
+}
+
+enum KnowUs {
+  FACEBOOK
+  INSTAGRAM
+  INDICATION
+}
+
+enum ClientStatus {
+  ACTIVE
+  DISABLE
 }
 
 type Query {
@@ -140,6 +171,7 @@ input UpdateSessionInput {
   id: String!
   procedureName: String!
   saleItemId: String!
+  status: SessionStatus!
 }
 
 input CreateClientInput {
@@ -152,9 +184,10 @@ input CreateClientInput {
   street: String!
   number: Float!
   complement: String!
-  knowUs: String!
-  socialMediaId: String!
-  socialMedia: String!
+  knowUs: KnowUs
+  recommendedBy: String
+  socialMediaId: String
+  socialMedia: SocialMedia
 }
 
 input UpdateClientInput {
@@ -167,9 +200,10 @@ input UpdateClientInput {
   street: String!
   number: Float!
   complement: String!
-  knowUs: String!
+  knowUs: KnowUs!
+  recommendedBy: String!
   socialMediaId: String!
-  socialMedia: String!
+  socialMedia: SocialMedia!
 }
 
 input CreateProcedureInput {
@@ -190,7 +224,7 @@ input CreateSaleInput {
   protocolDesc: String!
   clientId: String!
   saleItems: [CreateSaleItemInput!]!
-  paymentType: String!
+  paymentType: PaymentType!
 }
 
 input CreateSaleItemInput {
@@ -205,14 +239,14 @@ input UpdateSaleInput {
   protocolDesc: String!
   clientId: String
   saleItems: [CreateSaleItemInput!]
-  paymentType: String
+  paymentType: PaymentType
 }
 
 input CreateIndicationInput {
   name: String!
   celphone: String!
-  socialMedia: String!
-  socialMediaId: String!
+  socialMedia: SocialMedia
+  socialMediaId: String
   clientId: String!
 }
 

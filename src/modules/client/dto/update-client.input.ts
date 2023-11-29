@@ -1,5 +1,6 @@
 import { CreateClientInput } from './create-client.input'
 import { InputType, Field, PartialType } from '@nestjs/graphql'
+import { KnowUs, SocialMedia } from '@prisma/client'
 
 @InputType()
 export class UpdateClientInput extends PartialType(CreateClientInput) {
@@ -30,12 +31,15 @@ export class UpdateClientInput extends PartialType(CreateClientInput) {
   @Field(() => String)
   complement: string
 
+  @Field(() => KnowUs)
+  knowUs: KnowUs
+
   @Field(() => String)
-  knowUs: string
+  recommendedBy: string
 
   @Field(() => String)
   socialMediaId: string
 
-  @Field(() => String)
-  socialMedia: string
+  @Field(() => SocialMedia)
+  socialMedia: SocialMedia
 }

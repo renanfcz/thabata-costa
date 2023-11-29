@@ -1,4 +1,5 @@
 import { InputType, Field } from '@nestjs/graphql'
+import { SocialMedia } from '@prisma/client'
 
 @InputType()
 export class CreateIndicationInput {
@@ -8,10 +9,10 @@ export class CreateIndicationInput {
   @Field(() => String)
   celphone: string
 
-  @Field(() => String)
-  socialMedia: string
+  @Field(() => SocialMedia, { nullable: true })
+  socialMedia: SocialMedia
 
-  @Field(() => String)
+  @Field(() => String, { nullable: true })
   socialMediaId: string
 
   @Field(() => String)
