@@ -1,7 +1,7 @@
 import { ObjectType, Field } from '@nestjs/graphql'
 import { Procedure } from 'src/modules/procedure/entities/procedure.entity'
 import { Session } from 'src/modules/session/entities/session.entity'
-import { Sale } from './sale.entity'
+import { Protocol } from './protocol.entity'
 
 @ObjectType()
 export class SaleItem {
@@ -17,12 +17,12 @@ export class SaleItem {
   @Field(() => Procedure)
   procedure?: Procedure
 
-  @Field(() => Sale)
-  sale?: Sale
-
   @Field(() => [Session])
-  sessions: Session[]
+  sessions?: Session[]
 
   @Field(() => Number)
   sessionsNum: number
+
+  @Field(() => Protocol)
+  protocol?: Protocol
 }

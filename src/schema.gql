@@ -62,17 +62,23 @@ type SaleItem {
   value: Float!
   discount: Float!
   procedure: Procedure!
-  sale: Sale!
   sessions: [Session!]!
   sessionsNum: Float!
+  protocol: Protocol!
+}
+
+type Protocol {
+  id: String!
+  protocolName: String!
+  protocolDesc: String!
+  sale: Sale!
+  saleItems: [SaleItem!]!
 }
 
 type Sale {
   id: String!
-  protocolName: String!
-  protocolDesc: String!
+  protocols: [Protocol!]
   createdAt: DateTime!
-  saleItems: [SaleItem!]!
   client: Client!
   paymentType: PaymentType!
 }
@@ -92,9 +98,9 @@ type Client {
   celphone: String!
   state: String!
   city: String!
-  street: String!
-  number: Float!
-  complement: String!
+  street: String
+  number: Float
+  complement: String
   indications: [Indication!]!
   createdAt: DateTime!
   knowUs: KnowUs
@@ -148,7 +154,6 @@ type Mutation {
   removeProcedure(id: String!): Procedure!
   createSale(createSaleInput: CreateSaleInput!): Sale!
   removeSale(id: String!): Sale!
-  updateSale(id: String!, sale: UpdateSaleInput!): Sale!
   createIndication(createIndicationInput: CreateIndicationInput!): Indication!
   removeIndication(id: String!): Indication!
   createUser(createUserInput: CreateUserInput!): User!
@@ -158,19 +163,15 @@ input CreateSessionInput {
   initDate: DateTime!
   finalDate: DateTime!
   obs: String!
-  clientId: String!
-  procedureId: String!
+  saleItemId: String!
 }
 
 input UpdateSessionInput {
-  initDate: DateTime!
-  finalDate: DateTime!
-  obs: String!
-  clientId: String
-  procedureId: String!
+  initDate: DateTime
+  finalDate: DateTime
+  obs: String
+  saleItemId: String
   id: String!
-  procedureName: String!
-  saleItemId: String!
   status: SessionStatus!
 }
 
@@ -181,9 +182,9 @@ input CreateClientInput {
   celphone: String!
   state: String!
   city: String!
-  street: String!
-  number: Float!
-  complement: String!
+  street: String
+  number: Float
+  complement: String
   knowUs: KnowUs
   recommendedBy: String
   socialMediaId: String
@@ -220,26 +221,24 @@ input UpdateProcedureInput {
 }
 
 input CreateSaleInput {
-  protocolName: String!
-  protocolDesc: String!
+  protocols: [CreateProtocolInput!]!
   clientId: String!
-  saleItems: [CreateSaleItemInput!]!
   paymentType: PaymentType!
 }
 
-input CreateSaleItemInput {
-  value: Float!
-  discount: Float!
-  procedureId: String!
-  sessionsNum: Float!
+input CreateProtocolInput {
+  protocolName: String!
+  protocolDesc: String!
+  saleId: String
+  saleItems: [CreateSaleItemInput!]!
 }
 
-input UpdateSaleInput {
-  protocolName: String
-  protocolDesc: String!
-  clientId: String
-  saleItems: [CreateSaleItemInput!]
-  paymentType: PaymentType
+input CreateSaleItemInput {
+  procedureId: String!
+  value: Float!
+  discount: Float!
+  sessionsNum: Float!
+  protocolId: String
 }
 
 input CreateIndicationInput {

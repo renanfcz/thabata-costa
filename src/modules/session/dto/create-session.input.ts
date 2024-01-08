@@ -11,8 +11,5 @@ export class CreateSessionInput {
   obs?: string
 
   @Field(() => String)
-  clientId: string
-
-  @Field(() => String)
-  procedureId: string
+  saleItemId: string
 }

@@ -2,7 +2,6 @@ import { Resolver, Query, Mutation, Args } from '@nestjs/graphql'
 import { SaleService } from './sale.service'
 import { Sale } from './entities/sale.entity'
 import { CreateSaleInput } from './dto/sale/create-sale.input'
-import { UpdateSaleInput } from './dto/sale/update-sale.input'
 
 @Resolver(() => Sale)
 export class SaleResolver {
@@ -28,11 +27,11 @@ export class SaleResolver {
     return this.saleService.remove(id)
   }
 
-  @Mutation(() => Sale)
-  updateSale(
-    @Args('id', { type: () => String }) id: string,
-    @Args('sale', { type: () => UpdateSaleInput }) sale: UpdateSaleInput,
-  ) {
-    return this.saleService.update(id, sale)
-  }
+  // @Mutation(() => Sale)
+  // updateSale(
+  //   @Args('id', { type: () => String }) id: string,
+  //   @Args('sale', { type: () => UpdateSaleInput }) sale: UpdateSaleInput,
+  // ) {
+  //   return this.saleService.update(id, sale)
+  // }
 }

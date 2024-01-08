@@ -1,35 +1,53 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
 import { PrismaService } from 'src/database/prisma.service'
 import { CreateSaleInput } from './dto/sale/create-sale.input'
-import { UpdateSaleInput } from './dto/sale/update-sale.input'
-
 @Injectable()
 export class SaleService {
   constructor(private prisma: PrismaService) {}
 
   async create(createSaleInput: CreateSaleInput) {
-    return this.prisma.sale.create({
+    const saleSaved = await this.prisma.sale.create({
       data: {
-        clientId: createSaleInput.clientId,
-        protocolName: createSaleInput.protocolName,
-        protocolDesc: createSaleInput.protocolDesc,
-        saleItems: {
-          createMany: { data: createSaleInput.saleItems },
-        },
+        client: { connect: { id: createSaleInput.clientId } },
         paymentType: createSaleInput.paymentType,
       },
-      include: { saleItems: true, client: true },
     })
+    createSaleInput.protocols.forEach(async (p) => {
+      const protocol = await this.prisma.protocol.create({
+        data: {
+          protocolName: p.protocolName,
+          protocolDesc: p.protocolDesc,
+          sale: { connect: { id: saleSaved.id } },
+        },
+      })
+
+      p.saleItems.forEach(async (s) => {
+        await this.prisma.saleItem.create({
+          data: {
+            procedure: { connect: { id: s.procedureId } },
+            protocol: { connect: { id: protocol.id } },
+            value: s.value,
+            discount: s.discount,
+            sessionsNum: s.sessionsNum,
+          },
+        })
+      })
+    })
+
+    return this.findOne(saleSaved.id)
   }
 
   async findAll() {
     return this.prisma.sale.findMany({
       include: {
         client: true,
-        saleItems: {
+        protocols: {
           include: {
-            procedure: true,
-            sessions: true,
+            saleItems: {
+              include: {
+                procedure: true,
+              },
+            },
           },
         },
       },
@@ -41,7 +59,15 @@ export class SaleService {
       where: { id },
       include: {
         client: true,
-        saleItems: true,
+        protocols: {
+          include: {
+            saleItems: {
+              include: {
+                procedure: true,
+              },
+            },
+          },
+        },
       },
     })
   }
@@ -56,33 +82,33 @@ export class SaleService {
     }
   }
 
-  async update(id: string, sale: UpdateSaleInput) {
-    try {
-      return await this.prisma.sale.update({
-        where: { id },
-        data: {
-          protocolName: sale.protocolName,
-          protocolDesc: sale.protocolDesc,
-        },
-        include: {
-          saleItems: {
-            include: {
-              sessions: {
-                include: {
-                  saleItem: {
-                    include: {
-                      procedure: true,
-                    },
-                  },
-                },
-              },
-              procedure: true,
-            },
-          },
-        },
-      })
-    } catch (error) {
-      throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR)
-    }
-  }
+  // async update(id: string, sale: UpdateSaleInput) {
+  //   try {
+  //     return await this.prisma.sale.update({
+  //       where: { id },
+  //       data: {
+  //         protocols: sale.protocols,
+  //         protocolDesc: sale.protocolDesc,
+  //       },
+  //       include: {
+  //         saleItems: {
+  //           include: {
+  //             sessions: {
+  //               include: {
+  //                 saleItem: {
+  //                   include: {
+  //                     procedure: true,
+  //                   },
+  //                 },
+  //               },
+  //             },
+  //             procedure: true,
+  //           },
+  //         },
+  //       },
+  //     })
+  //   } catch (error) {
+  //     throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR)
+  //   }
+  // }
 }

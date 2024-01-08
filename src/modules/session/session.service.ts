@@ -1,6 +1,5 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
 import { PrismaService } from 'src/database/prisma.service'
-import { SaleItem } from '../sale/entities/sale-item.entity'
 import { CreateSessionInput } from './dto/create-session.input'
 import { UpdateSessionInput } from './dto/update-session.input'
 
@@ -22,38 +21,17 @@ export class SessionService {
     }
 
     try {
-      const saleItem = await this.getSaleItemByClientAndProcedure(
-        input.clientId,
-        input.procedureId,
-      )
-
-      const hasPendentSessionForProcedure = saleItem
-        ? this.hasPendentSessionForProcedure(saleItem)
-        : undefined
-
-      if (saleItem === null || !hasPendentSessionForProcedure) {
-        throw new HttpException(
-          'O cliente não realizou a compra desse procedimento ou não possui mais sessões pendentes para ele.',
-          HttpStatus.BAD_REQUEST,
-        )
-      }
-
       const sessionSaved = await this.prisma.session.create({
         data: {
           initDate: input.initDate,
           finalDate: input.finalDate,
-          saleItem: { connect: { id: saleItem.id } },
+          saleItem: { connect: { id: input.saleItemId } },
           obs: input.obs,
         },
         include: {
           saleItem: {
             include: {
               procedure: true,
-              sale: {
-                include: {
-                  client: true,
-                },
-              },
             },
           },
         },
@@ -71,8 +49,14 @@ export class SessionService {
         saleItem: {
           include: {
             procedure: true,
-            sale: {
-              include: { client: true },
+            protocol: {
+              include: {
+                sale: {
+                  include: {
+                    client: true,
+                  },
+                },
+              },
             },
           },
         },
@@ -101,50 +85,10 @@ export class SessionService {
       )
     }
 
-    const oldSession = await this.prisma.session.findFirst({
-      where: {
-        id,
-      },
-      include: {
-        saleItem: {
-          include: {
-            procedure: true,
-            sessions: true,
-          },
-        },
-      },
-    })
-
-    if (oldSession.saleItem.procedure.id !== input.procedureId) {
-      const saleItem = await this.getSaleItemByClientAndProcedure(
-        input.clientId,
-        input.procedureId,
-      )
-
-      const hasPendentSessionForProcedure = saleItem
-        ? this.hasPendentSessionForProcedure(saleItem)
-        : undefined
-
-      if (saleItem === undefined || !hasPendentSessionForProcedure) {
-        throw new HttpException(
-          'O cliente não realizou a compra desse procedimento ou não possui mais sessões pendentes para ele.',
-          HttpStatus.BAD_REQUEST,
-        )
-      }
-    }
-
     try {
-      const procedure = await this.prisma.procedure.findFirst({
-        where: {
-          id: input.procedureId,
-        },
-      })
-      await this.prisma.saleItem.update({
+      const saleItem = await this.prisma.saleItem.findFirst({
         where: {
           id: input.saleItemId,
-        },
-        data: {
-          procedureId: procedure.id,
         },
       })
       return await this.prisma.session.update({
@@ -152,16 +96,12 @@ export class SessionService {
         data: {
           initDate: input.initDate,
           finalDate: input.finalDate,
+          saleItem: { connect: { id: saleItem.id } },
         },
         include: {
           saleItem: {
             include: {
               procedure: true,
-              sale: {
-                include: {
-                  client: true,
-                },
-              },
             },
           },
         },
@@ -239,30 +179,5 @@ export class SessionService {
         ],
       },
     })
-  }
-
-  private async getSaleItemByClientAndProcedure(
-    clientId: string,
-    procedureId: string,
-  ) {
-    return await this.prisma.saleItem.findFirst({
-      where: {
-        AND: [
-          { procedureId },
-          {
-            sale: {
-              clientId,
-            },
-          },
-        ],
-      },
-      include: {
-        sessions: true,
-      },
-    })
-  }
-
-  private hasPendentSessionForProcedure(saleItem: SaleItem) {
-    return saleItem.sessions.length < saleItem.sessionsNum
   }
 }

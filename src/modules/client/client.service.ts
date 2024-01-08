@@ -39,18 +39,13 @@ export class ClientService {
         indications: true,
         sales: {
           include: {
-            saleItems: {
+            protocols: {
               include: {
-                sessions: {
+                saleItems: {
                   include: {
-                    saleItem: {
-                      include: {
-                        procedure: true,
-                      },
-                    },
+                    procedure: true,
                   },
                 },
-                procedure: true,
               },
             },
           },
@@ -66,18 +61,13 @@ export class ClientService {
         indications: true,
         sales: {
           include: {
-            saleItems: {
+            protocols: {
               include: {
-                sessions: {
+                saleItems: {
                   include: {
-                    saleItem: {
-                      include: {
-                        procedure: true,
-                      },
-                    },
+                    procedure: true,
                   },
                 },
-                procedure: true,
               },
             },
           },
@@ -93,18 +83,13 @@ export class ClientService {
         indications: true,
         sales: {
           include: {
-            saleItems: {
+            protocols: {
               include: {
-                sessions: {
+                saleItems: {
                   include: {
-                    saleItem: {
-                      include: {
-                        procedure: true,
-                      },
-                    },
+                    procedure: true,
                   },
                 },
-                procedure: true,
               },
             },
           },

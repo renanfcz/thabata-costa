@@ -82,15 +82,24 @@ model Indication {
   @@map("indication")
 }
 
-model Sale {
-  id           String      @id @default(cuid()) @map("_id")
+model Protocol {
+  id           String     @id @default(cuid()) @map("_id")
   protocolName String
   protocolDesc String
+  sale         Sale?      @relation(fields: [saleId], references: [id])
+  saleId       String?
   saleItems    SaleItem[]
-  client       Client?     @relation(fields: [clientId], references: [id])
-  clientId     String?
-  createdAt    DateTime    @default(now())
-  paymentType  PaymentType
+
+  @@map("protocol")
+}
+
+model Sale {
+  id          String      @id @default(cuid()) @map("_id")
+  protocols   Protocol[]
+  client      Client?     @relation(fields: [clientId], references: [id])
+  clientId    String?
+  createdAt   DateTime    @default(now())
+  paymentType PaymentType
 
   @@map("sale")
 }
@@ -101,10 +110,10 @@ model SaleItem {
   procedureId String
   value       Float
   discount    Float
-  sale        Sale?     @relation(fields: [saleId], references: [id])
-  saleId      String?
-  sessions    Session[]
   sessionsNum Int
+  protocol    Protocol? @relation(fields: [protocolId], references: [id])
+  protocolId  String?
+  sessions    Session[]
 
   @@map("saleItem")
 }
@@ -113,8 +122,8 @@ model Procedure {
   id       String     @id @default(cuid()) @map("_id")
   name     String     @unique
   price    Float
-  saleItem SaleItem[]
   color    String
+  saleItems SaleItem[]
 
   @@map("procedures")
 }
@@ -124,9 +133,9 @@ model Session {
   initDate   DateTime
   finalDate  DateTime
   obs        String?
-  saleItem   SaleItem?     @relation(fields: [saleItemId], references: [id])
-  saleItemId String?
   status     SessionStatus @default(SCHEDULED)
+  saleItem   SaleItem      @relation(fields: [saleItemId], references: [id])
+  saleItemId String
 
   @@map("sessions")
 }

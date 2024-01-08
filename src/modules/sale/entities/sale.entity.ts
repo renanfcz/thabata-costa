@@ -1,24 +1,18 @@
 import { ObjectType, Field, registerEnumType } from '@nestjs/graphql'
 import { PaymentType } from '@prisma/client'
 import { Client } from 'src/modules/client/entities/client.entity'
-import { SaleItem } from './sale-item.entity'
+import { Protocol } from './protocol.entity'
 
 @ObjectType()
 export class Sale {
   @Field(() => String)
   id: string
 
-  @Field(() => String)
-  protocolName: string
-
-  @Field(() => String)
-  protocolDesc: string
+  @Field(() => [Protocol], { nullable: true })
+  protocols: Protocol[]
 
   @Field(() => Date)
   createdAt: Date
-
-  @Field(() => [SaleItem])
-  saleItems: SaleItem[]
 
   @Field(() => Client)
   client: Client
