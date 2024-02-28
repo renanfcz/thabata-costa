@@ -8,5 +8,5 @@ export class UpdateSessionInput extends PartialType(CreateSessionInput) {
   id: string
 
   @Field(() => SessionStatus)
-  status: SessionStatus
+  status?: SessionStatus
 }

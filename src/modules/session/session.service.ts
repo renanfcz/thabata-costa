@@ -86,22 +86,26 @@ export class SessionService {
     }
 
     try {
-      const saleItem = await this.prisma.saleItem.findFirst({
-        where: {
-          id: input.saleItemId,
-        },
-      })
       return await this.prisma.session.update({
         where: { id },
         data: {
           initDate: input.initDate,
           finalDate: input.finalDate,
-          saleItem: { connect: { id: saleItem.id } },
+          saleItem: { connect: { id: input.saleItemId } },
         },
         include: {
           saleItem: {
             include: {
               procedure: true,
+              protocol: {
+                include: {
+                  sale: {
+                    include: {
+                      client: true,
+                    },
+                  },
+                },
+              },
             },
           },
         },
