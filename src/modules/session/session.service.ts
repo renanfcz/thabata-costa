@@ -64,6 +64,32 @@ export class SessionService {
     })
   }
 
+  async findAllSessionsByProtocol(protocolId: string) {
+    return await this.prisma.session.findMany({
+      where: {
+        saleItem: {
+          protocolId,
+        },
+      },
+      include: {
+        saleItem: {
+          include: {
+            procedure: true,
+            protocol: {
+              include: {
+                sale: {
+                  include: {
+                    client: true,
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    })
+  }
+
   async findOne(id: string) {
     return await this.prisma.session.findFirst({
       where: { id },

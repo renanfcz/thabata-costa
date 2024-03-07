@@ -20,6 +20,13 @@ export class SessionResolver {
     return this.sessionService.findAll()
   }
 
+  @Query(() => [Session])
+  findAllSessionsByProtocol(
+    @Args('protocolId', { type: () => String }) protocolId: string,
+  ) {
+    return this.sessionService.findAllSessionsByProtocol(protocolId)
+  }
+
   @Query(() => Session)
   findOneSession(@Args('id', { type: () => String }) id: string) {
     return this.sessionService.findOne(id)

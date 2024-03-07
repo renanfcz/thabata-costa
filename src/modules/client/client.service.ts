@@ -44,6 +44,7 @@ export class ClientService {
                 saleItems: {
                   include: {
                     procedure: true,
+                    sessions: true,
                   },
                 },
               },
@@ -88,6 +89,7 @@ export class ClientService {
                 saleItems: {
                   include: {
                     procedure: true,
+                    sessions: true,
                   },
                 },
               },

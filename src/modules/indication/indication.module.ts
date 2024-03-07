@@ -1,4 +1,4 @@
-import { PrismaService } from 'src/database/prisma.service';
+import { PrismaService } from 'src/database/prisma.service'
 import { Module } from '@nestjs/common'
 import { IndicationService } from './indication.service'
 import { IndicationResolver } from './indication.resolver'

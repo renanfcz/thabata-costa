@@ -124,6 +124,7 @@ enum ClientStatus {
 
 type Query {
   findAllSessions: [Session!]!
+  findAllSessionsByProtocol(protocolId: String!): [Session!]!
   findOneSession(id: String!): Session!
   findAllClients: [Client!]!
   findOneClient(id: String!): Client!
