@@ -6,6 +6,7 @@ type User {
   id: String!
   name: String!
   email: String!
+  nickname: String!
   password: String!
   createdAt: DateTime!
 }
@@ -139,7 +140,7 @@ type Query {
 }
 
 input AuthenticateInput {
-  email: String!
+  nickname: String!
   password: String!
 }
 
@@ -253,5 +254,6 @@ input CreateIndicationInput {
 input CreateUserInput {
   name: String!
   email: String!
+  nickname: String!
   password: String!
 }

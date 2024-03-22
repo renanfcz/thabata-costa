@@ -12,6 +12,9 @@ export class User {
   email: string
 
   @Field(() => String)
+  nickname: string
+
+  @Field(() => String)
   password: string
 
   @Field(() => Date)

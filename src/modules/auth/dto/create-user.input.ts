@@ -9,5 +9,8 @@ export class CreateUserInput {
   email: string
 
   @Field(() => String)
+  nickname: string
+
+  @Field(() => String)
   password: string
 }

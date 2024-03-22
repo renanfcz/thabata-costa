@@ -43,8 +43,11 @@ model User {
   id        String   @id @default(cuid()) @map("_id")
   name      String
   email     String
+  nickname  String
   password  String
   createdAt DateTime @default(now())
+
+  @@map("user")
 }
 
 model Client {
@@ -119,10 +122,10 @@ model SaleItem {
 }
 
 model Procedure {
-  id       String     @id @default(cuid()) @map("_id")
-  name     String     @unique
-  price    Float
-  color    String
+  id        String     @id @default(cuid()) @map("_id")
+  name      String     @unique
+  price     Float
+  color     String
   saleItems SaleItem[]
 
   @@map("procedures")

@@ -48,7 +48,7 @@ export class AuthService {
       throw new Error('Credenciais inválidas')
     }
 
-    const payload = { email: user.email, id: user.id }
+    const payload = { nickname: user.nickname, id: user.id }
 
     const accessToken = await this.jwtService.signAsync(payload, {
       expiresIn: '60s',
@@ -63,7 +63,7 @@ export class AuthService {
 
   private async validateUser(data: AuthenticateInput): Promise<User | null> {
     const user = await this.prisma.user.findFirst({
-      where: { email: data.email },
+      where: { nickname: data.nickname },
     })
 
     if (!user) {
