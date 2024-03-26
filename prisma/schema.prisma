@@ -69,6 +69,7 @@ model Client {
   socialMediaId String?
   sales         Sale[]
   clientStatus  ClientStatus @default(ACTIVE)
+  anamnesis     Anamnesis[]
 
   @@map("clients")
 }
@@ -141,4 +142,18 @@ model Session {
   saleItemId String
 
   @@map("sessions")
+}
+
+model Anamnesis {
+  id           String    @id @default(cuid()) @map("_id")
+  protocolType String
+  client       Client    @relation(fields: [clientId], references: [id])
+  clientId     String
+  createdAt    DateTime  @default(now())
+  signedIn     DateTime?
+  signature    String?
+  expriresIn   DateTime?
+  data         Json
+
+  @@map("anamnesis")
 }

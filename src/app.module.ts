@@ -9,6 +9,7 @@ import { IndicationModule } from './modules/indication/indication.module'
 import { ProcedureModule } from './modules/procedure/procedure.module'
 import { SaleModule } from './modules/sale/sale.module'
 import { SessionModule } from './modules/session/session.module'
+import { AnamnesisModule } from './modules/anamnesis/anamnesis.module'
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { SessionModule } from './modules/session/session.module'
     SaleModule,
     IndicationModule,
     AuthModule,
+    AnamnesisModule,
   ],
 })
 export class AppModule {}

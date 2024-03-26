@@ -37,6 +37,7 @@ export class ClientService {
     return await this.prisma.client.findMany({
       include: {
         indications: true,
+        anamnesis: true,
         sales: {
           include: {
             protocols: {
@@ -60,6 +61,7 @@ export class ClientService {
       where: { id },
       include: {
         indications: true,
+        anamnesis: true,
         sales: {
           include: {
             protocols: {
@@ -82,6 +84,7 @@ export class ClientService {
       where: { name },
       include: {
         indications: true,
+        anamnesis: true,
         sales: {
           include: {
             protocols: {

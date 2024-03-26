@@ -91,6 +91,17 @@ enum PaymentType {
   CREDIT
 }
 
+type Anamnesis {
+  id: String!
+  protocolType: String!
+  client: Client!
+  createdAt: DateTime!
+  signedIn: DateTime
+  signature: String
+  expriresIn: DateTime
+  data: String!
+}
+
 type Client {
   id: String!
   name: String!
@@ -110,6 +121,7 @@ type Client {
   socialMedia: String
   sales: [Sale!]!
   clientStatus: ClientStatus!
+  anamnesis: [Anamnesis!]!
 }
 
 enum KnowUs {
@@ -137,6 +149,9 @@ type Query {
   findAllIndications: [Indication!]!
   findOneIndication(id: String!): Indication!
   authenticate(authInput: AuthenticateInput!): Auth!
+  findAllAnamnesis: [Anamnesis!]!
+  findOneAnamnesis(id: String!): Anamnesis!
+  findAllAnamnesisByClient(id: String!): Anamnesis!
 }
 
 input AuthenticateInput {
@@ -159,6 +174,9 @@ type Mutation {
   createIndication(createIndicationInput: CreateIndicationInput!): Indication!
   removeIndication(id: String!): Indication!
   createUser(createUserInput: CreateUserInput!): User!
+  createAnamnesis(createAnamnesisInput: CreateAnamnesisInput!): Anamnesis!
+  updateAnamnesis(updateAnamnesisInput: UpdateAnamnesisInput!): Anamnesis!
+  signAnamnesis(input: UpdateAnamnesisInput!): Anamnesis!
 }
 
 input CreateSessionInput {
@@ -256,4 +274,18 @@ input CreateUserInput {
   email: String!
   nickname: String!
   password: String!
+}
+
+input CreateAnamnesisInput {
+  protocolType: String!
+  clientId: String!
+  data: String!
+}
+
+input UpdateAnamnesisInput {
+  id: String!
+  protocolType: String
+  signedIn: DateTime
+  signature: String
+  data: String
 }

@@ -2,6 +2,7 @@ import { Indication } from './../../indication/entities/indication.entity'
 import { ObjectType, Field, registerEnumType } from '@nestjs/graphql'
 import { Sale } from 'src/modules/sale/entities/sale.entity'
 import { ClientStatus, KnowUs } from '@prisma/client'
+import { Anamnesis } from 'src/modules/anamnesis/entities/anamnesis.entity'
 
 @ObjectType()
 export class Client {
@@ -58,6 +59,9 @@ export class Client {
 
   @Field(() => ClientStatus)
   clientStatus: ClientStatus
+
+  @Field(() => [Anamnesis])
+  anamnesis: Anamnesis[]
 }
 
 registerEnumType(ClientStatus, {
